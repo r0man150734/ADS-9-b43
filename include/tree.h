@@ -12,31 +12,14 @@ public:
 
     Node(char val) : value(val) {}
 };
-
 class PMTree {
 public:
     std::shared_ptr<Node> root;
 
     PMTree(const std::vector<char>& elements);
 };
+std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
+std::vector<char> getPerm1(PMTree& tree, int num);
+std::vector<char> getPerm2(PMTree& tree, int num);
 
-static void build(std::shared_ptr<Node> node, const std::vector<char>& remaining) {
-    if (remaining.empty()) return;
-
-    for (size_t i = 0; i < remaining.size(); ++i) {
-        char val = remaining[i];
-        auto child = std::make_shared<Node>(val);
-        node->children.push_back(child);
-
-        std::vector<char> next_remaining = remaining;
-        next_remaining.erase(next_remaining.begin() + i);
-        build(child, next_remaining);
-    }
-}
-
-PMTree::PMTree(const std::vector<char>& elements) {
-    root = std::make_shared<Node>('\0');  // корень пустой
-    build(root, elements);
-}
-
-#endif  // INCLUDE_TREE_H_
+#endif
