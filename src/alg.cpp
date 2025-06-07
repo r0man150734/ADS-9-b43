@@ -20,7 +20,7 @@ static void build(std::shared_ptr<Node> node, const std::vector<char>& remaining
 }
 
 PMTree::PMTree(const std::vector<char>& elements) {
-    root = std::make_shared<Node>('\0');  // корень пустой
+    root = std::make_shared<Node>('\0');
     build(root, elements);
 }
 
@@ -52,7 +52,10 @@ std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
 
 std::vector<char> getPerm1(PMTree& tree, int num) {
     auto all = getAllPerms(tree);
-    if (num <= 0 || num > static_cast<int>(all.size())) return {};
+
+    if (num < 1 || num > static_cast<int>(all.size()))
+        return {};
+
     return all[num - 1];
 }
 
@@ -70,16 +73,21 @@ std::vector<char> getPerm2(PMTree& tree, int num) {
         available.push_back(child->value);
 
     int n = available.size();
+    int totalPerms = factorial(n);
+
+    if (num < 1 || num > totalPerms)
+        return {};
+
     --num;
 
     for (int i = n; i > 0; --i) {
         int f = factorial(i - 1);
         int index = num / f;
         num %= f;
+
         result.push_back(available[index]);
         available.erase(available.begin() + index);
     }
+
     return result;
 }
-
-
