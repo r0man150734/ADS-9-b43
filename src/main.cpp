@@ -6,68 +6,68 @@
 #include <iomanip>
 #include "tree.h"
 
-using namespace std;
-using namespace std::chrono;
-
-// Генерация вектора символов '1', '2', ...
-vector<char> generateAlphabet(int n) {
-    vector<char> res;
-    for (int i = 1; i <= n; ++i)
+std::vector<char> generateAlphabet(int32_t n) {
+    std::vector<char> res;
+    for (int32_t i = 1; i <= n; ++i)
         res.push_back('0' + i);
     return res;
 }
 
-// Факториал
-int factorial(int n) {
-    int res = 1;
-    for (int i = 2; i <= n; ++i)
+int32_t factorial(int32_t n) {
+    int32_t res = 1;
+    for (int32_t i = 2; i <= n; ++i)
         res *= i;
     return res;
 }
 
-// Измерение времени одной функции
 template<typename Func>
-long long measure(Func f) {
-    auto start = high_resolution_clock::now();
+int64_t measure(Func f) {
+    auto start = std::chrono::high_resolution_clock::now();
     f();
-    auto end = high_resolution_clock::now();
-    return duration_cast<microseconds>(end - start).count();
+    auto end = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
 int main() {
-    random_device rd;
-    mt19937 gen(rd());
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
-    cout << "n,time_getAll,time_getPerm1,time_getPerm2\n";
+    std::cout << "n,time_getAll,time_getPerm1,time_getPerm2\n";
 
-    for (int n = 2; n <= 8; ++n) {
-        vector<char> alphabet = generateAlphabet(n);
+    for (int32_t n = 2; n <= 8; ++n) {
+        auto alphabet = generateAlphabet(n);
         PMTree tree(alphabet);
-        int maxPerms = factorial(n);
-        uniform_int_distribution<> distrib(1, maxPerms);
+        int32_t maxPerms = factorial(n);
 
-        int randomNum = distrib(gen);  // случайный номер перестановки
+        if (maxPerms == 0) {
+            std::cerr << "factorial overflow or invalid input for n=" << n << "\n";
+            continue;
+        }
 
-        long long t_all = measure([&]() {
+        std::uniform_int_distribution<int32_t> distrib(1, maxPerms);
+        int32_t randomNum = distrib(gen);
+
+        int64_t t_all = measure([&]() {
             auto perms = getAllPerms(tree);
             (void)perms;
-            });
+        });
 
-        long long t_p1 = measure([&]() {
+        int64_t t_p1 = measure([&]() {
             auto perm = getPerm1(tree, randomNum);
             (void)perm;
-            });
+        });
 
-        long long t_p2 = measure([&]() {
+        int64_t t_p2 = measure([&]() {
             auto perm = getPerm2(tree, randomNum);
             (void)perm;
-            });
+        });
 
-        cout << n << ","
-            << t_all << ","
-            << t_p1 << ","
-            << t_p2 << "\n";
+        std::cout << n << ","
+                  << t_all << ","
+                  << t_p1 << ","
+                  << t_p2 << "\n";
     }
 
     return 0;
 }
+
