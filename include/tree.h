@@ -6,20 +6,23 @@
 #include <memory>
 
 class Node {
- public:
+public:
     char value;
     std::vector<std::shared_ptr<Node>> children;
 
     explicit Node(char val) : value(val) {}
 };
+
 class PMTree {
- public:
+public:
     std::shared_ptr<Node> root;
 
     explicit PMTree(const std::vector<char>& elements);
 };
+
 std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
-std::vector<char> getPerm1(PMTree& tree, int num);
-std::vector<char> getPerm2(PMTree& tree, int num);
+std::vector<char> getPerm1(const PMTree& tree, int num);
+std::vector<char> getPerm2(const PMTree& tree, int num);
 
 #endif  // INCLUDE_TREE_H_
+
