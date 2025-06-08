@@ -17,7 +17,7 @@ class PMTree {
 public:
     std::shared_ptr<Node> root;
 
-    explicit PMTree(std::vector<char>& elements);
+    explicit PMTree(const std::vector<char>& elements);
 };
 
 std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
