@@ -7,7 +7,7 @@
 #include <vector>
 #include "tree.h"
 
-static void build(std::shared_ptr<Node> node, 
+static void build(std::shared_ptr<Node> node,
                   const std::vector<char>& remaining) {
     if (remaining.empty()) return;
 
