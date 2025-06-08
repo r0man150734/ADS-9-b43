@@ -25,7 +25,8 @@ int64_t measure(Func f) {
     auto start = std::chrono::high_resolution_clock::now();
     f();
     auto end = std::chrono::high_resolution_clock::now();
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    return std::chrono::duration_cast<std::chrono::microseconds>
+        (end - start).count();
 }
 
 int main() {
@@ -40,7 +41,8 @@ int main() {
         int32_t maxPerms = factorial(n);
 
         if (maxPerms == 0) {
-            std::cerr << "factorial overflow or invalid input for n=" << n << "\n";
+            std::cerr << "factorial overflow or invalid input for n=" 
+                << n << "\n";
             continue;
         }
 
