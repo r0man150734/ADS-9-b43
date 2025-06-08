@@ -41,7 +41,7 @@ int main() {
         int32_t maxPerms = factorial(n);
 
         if (maxPerms == 0) {
-            std::cerr << "factorial overflow or invalid input for n=" 
+            std::cerr << "factorial overflow or invalid input for n="
                 << n << "\n";
             continue;
         }
